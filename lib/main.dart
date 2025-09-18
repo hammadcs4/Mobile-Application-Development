@@ -1,77 +1,43 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
 void main() {
-  runApp(const MyApp());
-}
+  stdout.write('Ahmed: ');
+  String name = stdin.readLineSync()!.trim();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  stdout.write('19: ');
+  int age = int.parse(stdin.readLineSync()!.trim());
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MaximumBid(),
-    );
-  }
-}
-
-class MaximumBid extends StatefulWidget {
-  const MaximumBid({super.key});
-
-  @override
-  State<MaximumBid> createState() => _MaximumBidState();
-}
-
-class _MaximumBidState extends State<MaximumBid> {
-  int _currentBid = 100;
-
-  void _increaseBid() {
-    setState(() {
-      _currentBid += 50;
-    });
+  if (age < 18) {
+    print('Sorry $name, you are not eligible to register.');
+    return;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bidding Page'),
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Your Current Maximum Bid:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              '\$$_currentBid',
-              style: const TextStyle(
-                fontSize: 40,
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: _increaseBid,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              ),
-              child: const Text(
-                'Increase Bid',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  stdout.write('How many numbers do you want to enter? ');
+  int n = int.parse(stdin.readLineSync()!.trim());
+
+  List<int> numbers = [];
+  for (int i = 1; i <= n; i++) {
+    stdout.write('Enter number $i: ');
+    int num = int.parse(stdin.readLineSync()!.trim());
+    numbers.add(num);
   }
+
+  int sumEven = 0;
+  int sumOdd = 0;
+  for (int num in numbers) {
+    if (num.isEven) {
+      sumEven += num;
+    } else {
+      sumOdd += num;
+    }
+  }
+
+  int largest = numbers.reduce((a, b) => a > b ? a : b);
+  int smallest = numbers.reduce((a, b) => a < b ? a : b);
+
+  print('\nResults:');
+  print('Sum of even numbers: $sumEven');
+  print('Sum of odd numbers: $sumOdd');
+  print('Largest number: $largest');
+  print('Smallest number: $smallest');
 }
